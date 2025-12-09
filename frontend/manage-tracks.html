@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Керування треками - MusicFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/theme-overrides.css">
+    <link rel="stylesheet" href="css/music-player.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .manage-container { padding: 2rem; }
+        .tracks-list { display:flex; flex-direction:column; gap:10px; }
+        .track-row { display:flex; gap:12px; align-items:center; background:var(--secondary-bg); padding:10px; border-radius:8px; }
+        /* Make each track a full-width row with a clear separator and visible action buttons */
+        #tracksList .track-item { width:100%; display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-radius:8px; background:var(--tertiary-bg); border:1px solid var(--border-color); }
+        #tracksList .track-item + .track-item { margin-top:8px; }
+        #tracksList .track-controls { display:flex; gap:12px; align-items:center; justify-content:flex-end; min-width:160px }
+        #tracksList .btn-icon.danger { color:#ff8b8b; border:1px solid rgba(255,80,80,0.12); }
+        .track-cover { width:60px; height:60px; border-radius:6px; background:#222; flex-shrink:0; }
+        .track-meta { flex:1; overflow:hidden; }
+        .track-actions { display:flex; gap:8px; }
+        .upload-card { background:var(--secondary-bg); padding:12px; border-radius:8px; margin-bottom:12px; }
+        /* Make selects readable on dark theme */
+        #genreSelect, #manageGenreFilter {
+            background: var(--primary-bg) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        #genreSelect option, #manageGenreFilter option {
+            background: var(--primary-bg) !important;
+            color: var(--text-primary) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-music logo-icon"></i> 
+                    MusicFlow
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-home"></i></span>
+                    <span class="nav-text">Головна</span>
+                </a>
+                <a href="account.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-user"></i></span>
+                    <span class="nav-text">Профіль</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Керування треками</h2>
+            </header>
+
+            <section class="manage-container">
+                <div class="upload-card">
+                    <h3>Додати новий трек</h3>
+                    <form id="uploadTrackForm" enctype="multipart/form-data">
+                        <div class="upload-row">
+                            <input class="form-input" type="text" name="title" placeholder="Назва треку" required />
+                            <input class="form-input" type="text" name="artist" placeholder="Виконавець" required />
+                            <input class="form-input" type="text" name="album" placeholder="Альбом" />
+                            <select class="form-input" id="genreSelect" name="genre">
+                                <option value="">Оберіть жанр...</option>
+                            </select>
+                        </div>
+
+                        <div class="upload-row upload-actions">
+                            <label class="file-label">Аудіо
+                                <input class="file-input" type="file" name="file" accept="audio/*" required />
+                            </label>
+                            <label class="file-label">Обкладинка
+                                <input class="file-input" id="coverInput" type="file" name="cover" accept="image/*" />
+                            </label>
+                            <div id="coverPreview" class="cover-preview hidden" aria-hidden="true"></div>
+                            <button class="profile-btn primary" type="submit">Завантажити</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    <h3>Існуючі треки</h3>
+                    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+                        <label style="font-size:0.9rem;color:var(--text-secondary);">Фільтр за жанром:</label>
+                        <select id="manageGenreFilter" style="min-width:180px;padding:6px;border-radius:6px;background:var(--primary-bg);color:var(--text-primary);">
+                            <option value="">Усі жанри</option>
+                        </select>
+                        <button id="deleteSelectedBtn" class="profile-btn danger" style="margin-left:auto;">Видалити вибрані</button>
+                    </div>
+                    <div id="tracksList" class="tracks-list">
+                        <!-- tracks rendered here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/scripts.js"></script>
+    <script src="./js/track-manager.js"></script>
+</body>
+</html>

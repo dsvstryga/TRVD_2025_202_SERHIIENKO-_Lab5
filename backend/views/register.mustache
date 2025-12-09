@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 500px; 
+            margin: 50px auto; 
+            padding: 20px; 
+            background: #f8f9fa;
+        }
+        .register-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #dc3545;
+        }
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .requirements {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .security-info {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1 style="text-align: center; color: #333; margin-bottom: 30px;">📝 Реєстрація</h1>
+        
+        {{#error}}
+            <div class="error">
+                <strong>❌ Помилка:</strong> {{error}}
+            </div>
+        {{/error}}
+
+        <div class="requirements">
+            <strong>📋 Вимоги до реєстрації:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Унікальне ім'я користувача</li>
+                <li>Дійсна email адреса</li>
+                <li>Пароль мінімум 6 символів</li>
+            </ul>
+        </div>
+
+        <form action="/register" method="POST">
+            <div class="form-group">
+                <label for="username">👤 Ім'я користувача:</label>
+                <input type="text" id="username" name="username" placeholder="Оберіть унікальне ім'я" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">📧 Email адреса:</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔒 Пароль:</label>
+                <input type="password" id="password" name="password" placeholder="Мінімум 6 символів" required minlength="6">
+            </div>
+
+            <button type="submit">🎯 Зареєструватися</button>
+        </form>
+
+        <div class="links">
+            <p>Вже маєте акаунт? <a href="/login">Увійти</a></p>
+            <p><a href="/">← Повернутися на головну</a></p>
+        </div>
+
+        <div class="security-info">
+            <strong>🔒 Безпека (9-та лекція):</strong><br>
+            • Паролі зберігаються у вигляді хешів SHA512<br>
+            • Використано серверну сіль (serverSalt)<br>
+            • Немає зберігання паролів у чистому вигляді
+        </div>
+
+        {{#user}}
+        <div style="background: #d1ecf1; padding: 15px; border-radius: 6px; margin-top: 20px;">
+            <p>ℹ️ Ви вже авторизовані як <strong>{{user.username}}</strong></p>
+            <a href="/">Перейти на головну</a>
+        </div>
+        {{/user}}
+    </div>
+</body>
+</html>

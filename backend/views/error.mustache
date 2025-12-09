@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помилка</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 100px auto; 
+            padding: 20px; 
+            background: #f8f9fa;
+        }
+        .error-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid #dc3545;
+        }
+        .error-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .btn { 
+            background: #007bff; 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 6px; 
+            text-decoration: none;
+            display: inline-block;
+            margin: 8px 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover { background: #0056b3; }
+        .auth-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">❌</div>
+        <h1 style="color: #dc3545;">Сталася помилка</h1>
+        <p style="font-size: 1.2em; margin: 20px 0;">{{message}}</p>
+        
+        <div style="margin: 30px 0;">
+            <a href="/" class="btn">🏠 На головну</a>
+            <a href="javascript:history.back()" class="btn" style="background: #6c757d;">↩️ Назад</a>
+            <a href="/login" class="btn" style="background: #28a745;">🔑 Увійти</a>
+        </div>
+
+        <div class="auth-info">
+            <strong>🔐 Система автентифікації (9-та лекція):</strong><br>
+            • 401 - Not authorized: Користувач не автентифікований<br>
+            • 403 - Forbidden: Недостатньо прав для доступу<br>
+            • RBAC: Керування доступом на основі ролей
+        </div>
+
+        {{#user}}
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-top: 20px;">
+            <p><strong>Поточний користувач:</strong> {{user.username}} ({{user.role}})</p>
+        </div>
+        {{/user}}
+    </div>
+</body>
+</html>

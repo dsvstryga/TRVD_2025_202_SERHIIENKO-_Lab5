@@ -1,0 +1,496 @@
+/* profile.css - Стилі профілю та акаунта */
+.profile-page-content {
+    padding: 2rem 0;
+}
+
+/* Hero секція профілю */
+.profile-hero {
+    padding: 3rem;
+    background: linear-gradient(145deg, #1e1e1e, #121212);
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 10% 50%, rgba(29, 185, 84, 0.1), transparent 50%);
+}
+
+.profile-avatar-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--tertiary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    border: 3px solid var(--accent-green);
+    box-shadow: 0 0 0 5px rgba(29, 185, 84, 0.2);
+}
+
+.profile-icon-large {
+    font-size: 3.5rem;
+    color: var(--text-secondary);
+}
+
+.profile-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.role-badge-container {
+    margin-bottom: 1rem;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: var(--accent-green);
+    color: var(--primary-bg);
+}
+
+.profile-tagline {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Centered button group in the hero (admin + manage) */
+.profile-hero-buttons {
+    /* Use normal flow so buttons center responsively and won't overlap */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 1rem 0;
+    z-index: 5;
+    flex-wrap: wrap;
+}
+
+.profile-hero-buttons .profile-btn {
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    margin: 0;
+}
+
+/* Сітка акаунта */
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.account-card {
+    background-color: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border-left: 5px solid var(--accent-green);
+    transition: all 0.3s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-3px);
+    background-color: var(--tertiary-bg);
+}
+
+.account-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.account-card-title i {
+    color: var(--accent-green);
+    font-size: 1.3em;
+}
+
+.data-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--tertiary-bg);
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+
+.data-row:last-of-type {
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+
+.data-label {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.data-value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Кнопки профілю */
+.profile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.profile-btn.primary {
+    background-color: var(--accent-green);
+    color: var(--primary-bg);
+}
+
+.profile-btn.primary:hover {
+    background-color: var(--accent-green-hover);
+    transform: translateY(-1px);
+}
+
+.profile-btn.secondary {
+    background-color: var(--tertiary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.profile-btn.secondary:hover {
+    background-color: var(--border-color);
+    border-color: var(--text-secondary);
+}
+
+.profile-btn.admin-btn {
+    background-color: var(--accent-red);
+    color: var(--text-primary);
+}
+
+.profile-btn.admin-btn:hover {
+    background-color: #ff3347;
+}
+
+.profile-btn.logout {
+    background-color: transparent;
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+}
+
+.profile-btn.logout:hover {
+    background-color: var(--accent-red);
+    color: var(--text-primary);
+}
+
+.full-width-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Інформація профілю */
+.profile-info-section {
+    margin-bottom: 2rem;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-info-card {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.profile-avatar {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--text-primary);
+    font-weight: bold;
+    border: 4px solid var(--tertiary-bg);
+}
+
+.profile-details {
+    flex: 1;
+}
+
+.profile-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--tertiary-bg);
+}
+
+.profile-item:last-child {
+    border-bottom: none;
+}
+
+.profile-item label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.profile-item span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.status-active {
+    color: var(--accent-green) !important;
+}
+
+.role-badge-profile {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.role-badge-profile.role-admin {
+    background-color: var(--accent-red);
+    color: var(--text-primary);
+}
+
+.role-badge-profile.role-moderator {
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+}
+
+.role-badge-profile.role-user {
+    background-color: var(--accent-green);
+    color: var(--primary-bg);
+}
+
+/* Статистика профілю */
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--secondary-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    color: var(--accent-green);
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Дії профілю */
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+/* Адмін панель */
+.admin-panel,
+.moderator-panel {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+.admin-panel {
+    border-left: 4px solid var(--accent-red);
+}
+
+.moderator-panel {
+    border-left: 4px solid var(--accent-blue);
+}
+
+.panel-header h3 {
+    margin: 0 0 8px 0;
+    color: var(--text-primary);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.panel-header p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.admin-btn-panel,
+.moderator-btn-panel {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.admin-btn-panel.primary {
+    background: var(--accent-red);
+    color: var(--text-primary);
+}
+
+.admin-btn-panel.secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.moderator-btn-panel.primary {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+}
+
+.moderator-btn-panel.secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.admin-btn-panel:hover,
+.moderator-btn-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Не авторизований стан */
+.not-authorized {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.not-authorized h2 {
+    color: var(--accent-red);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.not-authorized p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .profile-hero {
+        padding: 2rem 1rem;
+    }
+    
+    .profile-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .profile-info-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .profile-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+    }
+    
+    .admin-actions {
+        flex-direction: column;
+    }
+}

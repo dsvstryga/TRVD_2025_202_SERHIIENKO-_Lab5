@@ -1,0 +1,233 @@
+/* tracks.css - Стилі списків треків */
+.tracks-list {
+    background-color: var(--secondary-bg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.track-item {
+    display: grid;
+    grid-template-columns: 40px 48px 1fr 200px 120px 60px;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    gap: 1rem;
+}
+
+.track-item:hover {
+    background-color: var(--tertiary-bg);
+}
+
+.track-number {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.track-number i {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: var(--text-primary);
+}
+
+.track-item:hover .track-number::before {
+    opacity: 0;
+}
+
+.track-item:hover .track-number i {
+    opacity: 1;
+}
+
+.track-cover-small {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    position: relative;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    flex-shrink: 0;
+}
+
+.video-cover {
+    background: linear-gradient(135deg, #ff6b6b, #ffa726);
+}
+
+.track-cover-small .play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 4px;
+}
+
+.track-item:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-overlay i {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+/* If an icon is placed directly inside a cover (playlist cards, footer player), center it precisely */
+.track-cover-small > i,
+.playlist-cover > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    line-height: 1;
+    pointer-events: none;
+}
+
+.track-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.track-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+}
+
+.track-album {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.track-views {
+    width: 120px;
+    text-align: right;
+}
+
+.views-count {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.views-count::before {
+    content: "👁️";
+    font-size: 0.7rem;
+}
+
+.track-duration {
+    width: 60px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-divider {
+    height: 1px;
+    background-color: var(--tertiary-bg);
+    margin: 0 1rem;
+}
+
+/* Спрощена версія для головної сторінки */
+.tracks-list.simple .track-item {
+    grid-template-columns: 40px 48px 1fr 120px 60px 60px;
+}
+
+.tracks-list.simple .track-album {
+    display: none;
+}
+
+/* Стан відтворення */
+.track-item.playing {
+    background-color: var(--tertiary-bg);
+}
+
+.track-item.playing .track-number {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.track-item.playing .track-number::before {
+    opacity: 0;
+}
+
+.track-item.playing .track-number i {
+    opacity: 1;
+    color: var(--accent-green);
+}
+
+/* Favorite button styles for track items */
+.fav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.12s ease, color 0.12s ease;
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.fav-btn:hover {
+    transform: scale(1.1);
+    color: #ff4444;
+}
+
+.fav-btn.favorited {
+    color: #ff4444 !important;
+}
+
+.fav-btn.favorited i {
+    color: #ff4444 !important;
+}
+
+.fav-btn i.fas.fa-heart {
+    color: #ff4444 !important;
+}
+
+.fav-btn i.far.fa-heart {
+    color: var(--text-secondary);
+}

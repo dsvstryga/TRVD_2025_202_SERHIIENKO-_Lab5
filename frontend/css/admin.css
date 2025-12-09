@@ -1,0 +1,274 @@
+/* admin.css - Стилі адмін-панелі */
+.admin-stats {
+    background: var(--secondary-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.admin-stats h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.stat-item {
+    background: var(--tertiary-bg);
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+}
+
+.stat-item i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: var(--accent-green);
+}
+
+.stat-item span {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.stat-item strong {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+/* Таблиця користувачів */
+.users-table-container {
+    background: var(--secondary-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--tertiary-bg);
+}
+
+.users-table th {
+    background: var(--tertiary-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.users-table td {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.users-table tr:hover {
+    background-color: var(--tertiary-bg);
+}
+
+/* Дії з користувачами */
+.user-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.action-btn:hover {
+    background: var(--tertiary-bg);
+    color: var(--text-primary);
+}
+
+.ban-btn:hover {
+    color: var(--accent-red);
+}
+
+.delete-btn:hover {
+    color: var(--accent-red);
+}
+
+.edit-btn:hover {
+    color: var(--accent-green);
+}
+
+.role-btn:hover {
+    color: var(--accent-blue);
+}
+
+/* Елементи керування таблицею */
+.table-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.refresh-statuses-btn {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.refresh-statuses-btn:hover {
+    background: #5a6fd8;
+    transform: translateY(-1px);
+}
+
+.refresh-statuses-btn.success {
+    background: var(--accent-green);
+}
+
+.refresh-statuses-btn.success:hover {
+    background: var(--accent-green-hover);
+}
+
+/* Стан завантаження */
+.loading-text {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.loading-text i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Пошук в адмінці */
+.admin-search-container {
+    margin-bottom: 1.5rem;
+}
+
+.admin-search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem 1rem;
+    background-color: var(--tertiary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.admin-search-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    background-color: var(--secondary-bg);
+}
+
+/* Ролі та статуси */
+.user-role {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.user-status.active {
+    background-color: var(--accent-green);
+    color: var(--primary-bg);
+}
+
+.user-status.banned {
+    background-color: var(--accent-red);
+    color: var(--text-primary);
+}
+
+.user-status.pending {
+    background-color: #ffa726;
+    color: var(--primary-bg);
+}
+
+.registration-date {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Адаптивність адмін-панелі */
+@media (max-width: 1024px) {
+    .users-table {
+        font-size: 0.8rem;
+    }
+    
+    .users-table th,
+    .users-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .users-table-container {
+        overflow-x: auto;
+    }
+    
+    .users-table {
+        min-width: 800px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .table-controls {
+        flex-direction: column;
+    }
+    
+    .user-actions {
+        flex-direction: column;
+    }
+}

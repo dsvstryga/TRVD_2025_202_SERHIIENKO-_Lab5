@@ -1,0 +1,219 @@
+/* interactive.css - Small effects and hover styles for MusicFlow UI
+   Loaded via frontend/styles.css
+*/
+
+:root{
+    --accent: #1db954;
+    --accent-strong: #17a34a;
+    --danger: #ff6b6b;
+    --soft-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    --muted: rgba(0,0,0,0.5);
+}
+
+/* Buttons and action icons */
+.action-btn, .btn, button {
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+    will-change: transform, box-shadow;
+    cursor: pointer;
+}
+
+.action-btn:hover, .btn:hover, button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--soft-shadow);
+}
+
+.action-btn:active, .btn:active, button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Icon micro-interaction */
+.action-btn i, .btn i {
+    transition: transform 140ms ease;
+}
+.action-btn:hover i, .btn:hover i {
+    transform: rotate(-6deg) scale(1.06);
+}
+
+/* Table row hover for admin lists */
+#usersTableBody tr {
+    transition: background 160ms ease, transform 160ms ease;
+}
+#usersTableBody tr:hover {
+    background: rgba(29,185,84,0.04);
+}
+
+/* Slight emphasis on cells on hover */
+#usersTableBody tr td { transition: background 160ms ease; }
+
+/* Role & status badges */
+.role-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+.role-badge:hover { transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0,0,0,0.06); }
+
+.status-badge { padding: 4px 8px; border-radius: 10px; font-size: 0.85rem; }
+.status-badge.status-active { background: rgba(29,185,84,0.12); color: #0b6623; }
+.status-badge.status-banned { background: rgba(255,107,107,0.12); color: var(--danger); }
+
+/* Modal overlay & dialog tweaks (match window.showModal structure) */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 180ms ease;
+}
+.modal-overlay.show { opacity: 1; }
+.mf-modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 10050; display:flex; align-items:center; justify-content:center;
+}
+
+.mf-modal-dialog {
+    background: #0f0f0f; color: #fff; border-radius: 10px; width: 420px; max-width: 92%; box-shadow: 0 24px 48px rgba(0,0,0,0.6); transform: translateY(8px); transition: transform 180ms cubic-bezier(.2,.8,.2,1), opacity 160ms ease; opacity: 1; font-family: Roboto, sans-serif;
+}
+
+/* Modal header styled to match other green-accented cards */
+.mf-modal-dialog .modal-header {
+    position: relative;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px 18px; /* let flex place the icon and title naturally */
+    min-height:64px; /* ensure header tall enough for badge */
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    background: linear-gradient(90deg, rgba(29,185,84,0.10), rgba(0,0,0,0.02));
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    overflow: visible;
+}
+.mf-modal-dialog .modal-header h3 { margin:0; color:#eafaf0; font-weight:700; position: relative; z-index: 3; line-height:1.1; }
+
+
+/* circular green badge that sits on the overhang with white glyph */
+.modal-icon {
+    /* remove decorative square: keep wrapper for layout but make it visually transparent */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    padding: 0; /* no internal padding */
+    border-radius: 0;
+    background: transparent; /* no green square */
+    color: inherit;
+    font-size: 18px;
+    z-index: 3;
+    box-shadow: none;
+    border: none;
+    line-height: 1;
+    margin-right: 6px; /* slightly closer spacing for symmetry */
+    align-self: center;
+}
+.mf-modal-dialog .modal-header .modal-icon { color: #fff; }
+
+/* micro-adjust: center glyph inside the square badge */
+.modal-icon i, .modal-icon .fa, .modal-icon svg {
+    /* glyph centered inside wrapper; no background so it displays as an inline icon */
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
+    color: #fff; /* show icon in white */
+}
+
+/* Also nudge icons inside other small squares (player, avatars, user badges) without moving their containers */
+/* Remove broad nudges; use targeted centering for specific components below */
+
+/* (modal-icon sizing handled above) */
+
+/* Player / track cover icons: center glyphs within their containers */
+.track-cover-small > i,
+.track-cover-small > .fa,
+.playlist-cover > i,
+.playlist-cover .fa,
+.current-track .track-cover-small > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* Play overlay icon — centered by overlay's flexbox; slightly larger */
+.play-overlay i {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    position: static;
+}
+
+
+.modal {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.18);
+    max-width: 720px;
+    width: 92%;
+    margin: 24px;
+    transform: translateY(8px);
+    transition: transform 180ms cubic-bezier(.2,.8,.2,1), opacity 160ms ease;
+    opacity: 0;
+}
+.modal.open { transform: translateY(0); opacity: 1; }
+
+.modal .modal-header { padding: 14px 18px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.mf-modal-dialog .modal-body { padding: 12px 14px; }
+.mf-modal-dialog .modal-footer { padding: 10px 14px; display:flex; gap:8px; justify-content:flex-end; border-top: 1px solid rgba(255,255,255,0.03); }
+.modal .modal-body { padding: 16px 18px; }
+.modal .modal-footer { padding: 12px 18px; display:flex; gap:8px; justify-content:flex-end; border-top: 1px solid rgba(0,0,0,0.04); }
+
+/* Form fields inside modal */
+.modal input[type="text"], .modal textarea, .modal input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 6px;
+    transition: box-shadow 120ms ease, border-color 120ms ease;
+}
+.modal input[type="text"]:focus, .modal textarea:focus, .modal input[type="email"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(29,185,84,0.06);
+}
+
+/* Notification / toast */
+.toast, .notification {
+    transition: transform 180ms ease, opacity 160ms ease;
+    transform: translateY(-8px);
+    opacity: 0;
+}
+.toast.show, .notification.show { transform: translateY(0); opacity: 1; }
+
+.toast.success { background: #e6f9ef; color: #0b6623; border-left: 4px solid var(--accent); }
+.toast.error { background: #fff0f0; color: #a21a1a; border-left: 4px solid var(--danger); }
+.toast.info { background: #f4f8fb; color: var(--muted); border-left: 4px solid rgba(0,0,0,0.06); }
+
+/* Input subtle focus ring for the site */
+input:focus, textarea:focus, select:focus { box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+
+/* Small responsive adjustments */
+@media (max-width: 600px) {
+    .modal { width: 96%; margin: 12px; }
+    .action-btn .fa, .action-btn i { transform-origin: center; }
+}
+
+/* Accessibility: high-contrast focus */
+:focus { outline: 3px solid rgba(29,185,84,0.18); outline-offset: 2px; }

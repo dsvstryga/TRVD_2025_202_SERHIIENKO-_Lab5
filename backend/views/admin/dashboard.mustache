@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Адмін-панель</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background: #dc3545; color: white; padding: 20px; }
+        .user-card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; }
+        .admin { background: #ffe6e6; }
+        .moderator { background: #e6f3ff; }
+        .user { background: #f0f0f0; }
+        .inactive { opacity: 0.6; }
+        select, button { padding: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔧 Адмін-панель</h1>
+        <p>Керування користувачами та ролями</p>
+        <a href="/" style="color: white;">← На головну</a>
+    </div>
+
+    <h2>Список користувачів</h2>
+    
+    {{#users}}
+    <div class="user-card {{role}} {{^isActive}}inactive{{/isActive}}">
+        <h3>{{username}} ({{email}})</h3>
+        <p><strong>Роль:</strong> {{role}} | 
+           <strong>Статус:</strong> {{#isActive}}Активний{{/isActive}}{{^isActive}}Неактивний{{/isActive}} |
+           <strong>Створено:</strong> {{createdAt}}</p>
+        
+        <form action="/admin/users/{{_id}}/role" method="POST" style="display: inline;">
+            <select name="role">
+                <option value="user" {{#isUser}}selected{{/isUser}}>Користувач</option>
+                <option value="moderator" {{#isModerator}}selected{{/isModerator}}>Модератор</option>
+                <option value="admin" {{#isAdmin}}selected{{/isAdmin}}>Адміністратор</option>
+            </select>
+            <button type="submit">Змінити роль</button>
+        </form>
+        
+        <form action="/admin/users/{{_id}}/toggle-active" method="POST" style="display: inline;">
+            <button type="submit">
+                {{#isActive}}Заблокувати{{/isActive}}{{^isActive}}Розблокувати{{/isActive}}
+            </button>
+        </form>
+    </div>
+    {{/users}}
+</body>
+</html>

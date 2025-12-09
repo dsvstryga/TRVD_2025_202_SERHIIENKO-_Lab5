@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Акаунт - MusicFlow</title>
+    <meta name="description" content="Увійдіть або створіть акаунт MusicFlow">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-music logo-icon"></i> 
+                    MusicFlow
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-home"></i></span>
+                    <span class="nav-text">Головна</span>
+                </a>
+                <a href="library.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-headphones"></i></span>
+                    <span class="nav-text">Бібліотека</span>
+                </a>
+                <a href="about.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
+                    <span class="nav-text">Про нас</span>
+                </a>
+                <!-- Кнопки профілю та адмін-панелі видалено з бокової панелі -->
+                <!-- Адмін панель видалено з бокової панелі -->
+                </a>
+            </nav>
+            <div class="playlists-section">
+                <a href="account.html" class="nav-item active account-nav-btn" id="sidebarAccountBtn">
+                    <span class="nav-icon" id="sidebarAccountIcon">
+                        <i class="fas fa-user-circle"></i>
+                    </span>
+                    <span class="nav-text" id="sidebarAccountText">Увійти</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="user-actions">
+                    <button class="premium-btn">
+                        <i class="fas fa-crown premium-icon"></i> Premium
+                    </button>
+                </div>
+            </header>
+
+            <!-- Guest View (Login/Register) -->
+            <section id="guest-view" class="auth-page-container">
+                <div class="auth-card">
+                    <h2 class="auth-card-title">MusicFlow Акаунт</h2>
+                    
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" id="tab-login">Вхід</button>
+                        <button class="auth-tab" id="tab-register">Реєстрація</button>
+                    </div>
+                    
+                    <div id="login-section" class="auth-form active">
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="loginUsername" class="form-label">Ім'я користувача</label>
+                                <input type="text" id="loginUsername" class="form-control" placeholder="Ваше ім'я" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword" class="form-label">Пароль</label>
+                                <input type="password" id="loginPassword" class="form-control" placeholder="Ваш пароль" required>
+                            </div>
+                            <button type="submit" class="auth-btn">Увійти</button>
+                        </form>
+                        
+                        <p class="auth-switch">Не маєте акаунту? <a href="#" data-target="register">Зареєструватись</a></p>
+                    </div>
+
+                    <div id="register-section" class="auth-form">
+                        <form id="registerForm">
+                            <div class="form-group">
+                                <label for="registerUsername" class="form-label">Ім'я користувача</label>
+                                <input type="text" id="registerUsername" class="form-control" placeholder="Оберіть ім'я" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerEmail" class="form-label">Email</label>
+                                <input type="email" id="registerEmail" class="form-control" placeholder="Ваш email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPassword" class="form-label">Пароль</label>
+                                <input type="password" id="registerPassword" class="form-control" placeholder="Створіть пароль" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerConfirmPassword" class="form-label">Підтвердіть пароль</label>
+                                <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Повторіть пароль" required>
+                            </div>
+                            <button type="submit" class="auth-btn">Зареєструватись</button>
+                        </form>
+                        <p class="auth-switch">Вже маєте акаунт? <a href="#" data-target="login">Увійти</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User View (Profile) -->
+            <section id="user-view" style="display: none;" class="profile-page-content">
+                <div class="profile-hero">
+                    <div class="profile-hero-buttons">
+                        <button class="profile-btn admin-panel-btn" id="manageTracksBtn" style="display:none;">
+                            <i class="fas fa-music"></i> Керування треками
+                        </button>
+                        <button class="profile-btn admin-panel-btn" id="goToAdminPanelBtn" style="display:none;">
+                            <i class="fas fa-shield-alt"></i> Перейти до адмін-панелі
+                        </button>
+                    </div>
+                    <div class="profile-avatar-container">
+                        <i class="fas fa-user-circle profile-icon-large"></i>
+                    </div>
+                    
+                    <h1 id="profile-display-username">Ласкаво просимо!</h1>
+                    
+                    <div class="role-badge-container">
+                        <span class="role-badge" id="profile-role-badge">КОРИСТУВАЧ</span>
+                    </div>
+                    
+                    <p class="profile-tagline">Керуйте своїми персональними даними, підпискою та налаштуваннями безпеки.</p>
+                </div>
+
+                <div class="account-grid">
+                    <!-- Кнопка адмін-панелі видалена, залишилась лише одна у profile-hero -->
+                    <div class="account-card profile-card">
+                        <h2 class="account-card-title"><i class="fas fa-info-circle"></i> Основна інформація</h2>
+                        <div class="data-row">
+                            <span class="data-label">Ім'я користувача:</span>
+                            <strong class="data-value" id="profile-username">...</strong>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Email:</span>
+                            <strong class="data-value" id="profile-email">...</strong>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Роль:</span>
+                            <strong class="data-value" id="profile-role">...</strong>
+                        </div>
+                        <button class="profile-btn primary full-width-btn" id="editProfileBtn">
+                            <i class="fas fa-edit"></i> Редагувати профіль
+                        </button>
+                    </div>
+
+                    <div class="account-card security-card">
+                        <h2 class="account-card-title"><i class="fas fa-shield-alt"></i> Безпека</h2>
+                        <div class="data-row">
+                            <span class="data-label">Пароль:</span>
+                            <strong class="data-value">********</strong>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Останній вхід:</span>
+                            <strong class="data-value" id="profile-last-login">...</strong>
+                        </div>
+                        <button class="profile-btn secondary full-width-btn" id="changePasswordBtn">
+                            <i class="fas fa-key"></i> Змінити пароль
+                        </button>
+                    </div>
+
+                    <div class="account-card subscription-card">
+                        <h2 class="account-card-title"><i class="fas fa-crown"></i> Підписка</h2>
+                        <div class="data-row">
+                            <span class="data-label">Статус:</span>
+                            <strong class="data-value" id="subscription-status">Free</strong>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Діє до:</span>
+                            <strong class="data-value" id="subscription-end-date">Н/Д</strong>
+                        </div>
+                        <button class="premium-btn full-width-btn" id="manageSubscriptionBtn">
+                            <i class="fas fa-bolt"></i> Перейти на Premium
+                        </button>
+                    </div>
+                    
+                    <div class="account-card logout-card">
+                        <h2 class="account-card-title"><i class="fas fa-sign-out-alt"></i> Вихід</h2>
+                        <p class="logout-text">Для вашої безпеки, вийдіть з акаунту після завершення сеансу.</p>
+                        <button class="profile-btn logout full-width-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Вийти з акаунту
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/user-manager.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/profile.js"></script>
+    <script src="./js/scripts.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

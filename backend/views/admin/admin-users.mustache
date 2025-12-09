@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Керування користувачами</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+        }
+        .admin-header {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .users-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        th {
+            background: #343a40;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .btn { 
+            padding: 8px 16px; 
+            border: none; 
+            border-radius: 4px; 
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-primary:hover { background: #0056b3; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #545b62; }
+        .role-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .role-admin { background: #dc3545; color: white; }
+        .role-moderator { background: #ffc107; color: #212529; }
+        .role-user { background: #6c757d; color: white; }
+        .role-banned { background: #343a40; color: white; }
+        .status-active { color: #28a745; }
+        .status-inactive { color: #dc3545; }
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .rbac-info {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="admin-container">
+            <h1>👥 Керування користувачами</h1>
+            <p>Перегляд та управління обліковими записами (RBAC система)</p>
+            <a href="/admin" class="btn btn-primary">🔙 Назад до адмін-панелі</a>
+            <a href="/" class="btn" style="background: #6c757d;">🏠 На головну</a>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="stats">
+            <div class="stat-card">
+                <div>👥 Загалом</div>
+                <div class="stat-number">{{users.length}}</div>
+                <small>користувачів</small>
+            </div>
+            <div class="stat-card">
+                <div>👑 Адмінів</div>
+                <div class="stat-number" style="color: #dc3545;">
+                    {{#users}}{{#isAdmin}}1{{/isAdmin}}{{/users}}
+                </div>
+            </div>
+            <div class="stat-card">
+                <div>🛡️ Модераторів</div>
+                <div class="stat-number" style="color: #ffc107;">
+                    {{#users}}{{#isModerator}}1{{/isModerator}}{{/users}}
+                </div>
+            </div>
+            <div class="stat-card">
+                <div>🚫 Заблокованих</div>
+                <div class="stat-number" style="color: #343a40;">
+                    {{#users}}{{#isBanned}}1{{/isBanned}}{{/users}}
+                </div>
+            </div>
+        </div>
+
+        <div class="users-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ім'я</th>
+                        <th>Email</th>
+                        <th>Роль</th>
+                        <th>Статус</th>
+                        <th>Дата реєстрації</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#users}}
+                    <tr>
+                        <td>{{_id}}</td>
+                        <td><strong>{{username}}</strong></td>
+                        <td>{{email}}</td>
+                        <td>
+                            <span class="role-badge 
+                                {{#isAdmin}}role-admin{{/isAdmin}}
+                                {{#isModerator}}role-moderator{{/isModerator}}
+                                {{#isBanned}}role-banned{{/isBanned}}
+                                {{^isAdmin}}{{^isModerator}}{{^isBanned}}role-user{{/isBanned}}{{/isModerator}}{{/isAdmin}}">
+                                {{#isBanned}}Заблокований{{/isBanned}}
+                                {{^isBanned}}{{role}}{{/isBanned}}
+                            </span>
+                        </td>
+                        <td class="{{#isActive}}status-active{{/isActive}}{{^isActive}}status-inactive{{/isActive}}">
+                            {{#isActive}}🟢 Активний{{/isActive}}
+                            {{^isActive}}🔴 Неактивний{{/isActive}}
+                        </td>
+                        <td>{{createdAt}}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <form action="/admin/users/{{_id}}/role" method="POST" style="display: inline;">
+                                    <select name="role" onchange="this.form.submit()" style="padding: 4px; margin: 2px;">
+                                        <option value="user" {{#isUser}}selected{{/isUser}}>Користувач</option>
+                                        <option value="moderator" {{#isModerator}}selected{{/isModerator}}>Модератор</option>
+                                        <option value="admin" {{#isAdmin}}selected{{/isAdmin}}>Адмін</option>
+                                    </select>
+                                </form>
+                                
+                                {{#isBanned}}
+                                <form action="/admin/users/{{_id}}/unban" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-success" title="Розблокувати">
+                                        ✅
+                                    </button>
+                                </form>
+                                {{/isBanned}}
+                                {{^isBanned}}
+                                <form action="/admin/users/{{_id}}/ban" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-warning" title="Заблокувати">
+                                        🚫
+                                    </button>
+                                </form>
+                                {{/isBanned}}
+                                
+                                <form action="/admin/users/{{_id}}/toggle-active" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm {{#isActive}}btn-secondary{{/isActive}}{{^isActive}}btn-primary{{/isActive}}">
+                                        {{#isActive}}⏸️{{/isActive}}{{^isActive}}▶️{{/isActive}}
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {{/users}}
+                    {{^users}}
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px;">
+                            <h3>📭 Користувачі не знайдені</h3>
+                            <p>Ще немає зареєстрованих користувачів</p>
+                            <a href="/create-database" class="btn btn-primary">Створити тестові дані</a>
+                        </td>
+                    </tr>
+                    {{/users}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rbac-info">
+            <h3>🎯 RBAC модель (9-та лекція):</h3>
+            <p><strong>Subject (Суб'єкт):</strong> Користувач системи</p>
+            <p><strong>Role (Роль):</strong> Набір прав доступу (user, moderator, admin, banned)</p>
+            <p><strong>Permission (Дозвіл):</strong> Можливість виконувати дії</p>
+            <p><strong>Action (Дія):</strong> Конкретна операція в системі</p>
+            <p><strong>Object (Об'єкт):</strong> Ресурс або дані системи</p>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 30px;">
+            <h3>📋 Інструкція для адміністратора</h3>
+            <p><strong>Зміна ролі:</strong> Виберіть нову роль з випадаючого списку</p>
+            <p><strong>Блокування:</strong> Натисніть 🚫 для блокування користувача (роль "banned")</p>
+            <p><strong>Розблокування:</strong> Натисніть ✅ для повернення ролі "user"</p>
+            <p><strong>Активність:</strong> Натисніть ⏸️/▶️ для тимчасової деактивації</p>
+            <p><strong>Ролі:</strong> 
+                <span class="role-badge role-user">user</span> - Звичайний користувач,
+                <span class="role-badge role-moderator">moderator</span> - Модератор,
+                <span class="role-badge role-admin">admin</span> - Адміністратор,
+                <span class="role-badge role-banned">banned</span> - Заблокований
+            </p>
+        </div>
+    </div>
+</body>
+</html>

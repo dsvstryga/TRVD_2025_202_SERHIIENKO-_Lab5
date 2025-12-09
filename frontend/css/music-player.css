@@ -1,0 +1,346 @@
+/* music-player.css - Стилі музичного плеєра */
+.music-player{
+    /* Keep stable positioning and only animate non-layout properties to avoid jitter */
+    transition: box-shadow 200ms ease, background 200ms ease;
+    will-change: box-shadow, opacity;
+}
+.music-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--secondary-bg);
+    border-top: 1px solid var(--tertiary-bg);
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: calc(100% - 40px);
+    max-width: 1100px;
+    z-index: 1000;
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.5);
+    border-radius: 8px 8px 0 0;
+}
+
+.mf-expanded-player-overlay .expanded-player{ box-shadow: 0 20px 60px rgba(0,0,0,0.7); }
+
+/* Поточний трек */
+.now-playing {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.current-track {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.track-cover-small {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    flex-shrink: 0;
+}
+
+.track-cover-small img.track-cover-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+    display: none;
+}
+
+.track-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.track-details h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-details p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.like-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: transform 0.12s ease, color 0.12s ease;
+    padding: 0.45rem;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+.like-btn:hover {
+    transform: scale(1.1);
+    color: #ff4444;
+}
+
+.like-btn.favorited {
+    color: #ff4444 !important;
+}
+
+.like-btn.favorited i {
+    color: #ff4444 !important;
+}
+
+.like-btn i.fas.fa-heart {
+    color: #ff4444 !important;
+}
+
+.like-btn i.far.fa-heart {
+    color: var(--text-secondary);
+}
+
+/* Керування плеєром */
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 2;
+    max-width: 500px;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.control-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--tertiary-bg);
+}
+
+.play-btn {
+    background-color: var(--text-primary);
+    color: var(--primary-bg) !important;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--text-primary);
+}
+
+/* Прогрес бар */
+.progress-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: height 0.3s ease;
+}
+
+.progress-bar:hover {
+    height: 6px;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--text-secondary);
+    border-radius: 2px;
+    transition: width 0.1s ease;
+    position: relative;
+}
+
+.progress-handle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary-bg);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    display: none;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.progress-bar:hover .progress-handle,
+.progress.dragging .progress-handle {
+    display: block;
+    pointer-events: none;
+}
+
+.progress-bar:hover .progress {
+    background-color: var(--accent-green);
+}
+
+.current-time,
+.total-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    min-width: 40px;
+}
+
+/* Додаткові дії */
+.player-actions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-end;
+    min-width: 150px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.volume-bar .volume-handle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary-bg);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    display: none;
+    pointer-events: none;
+}
+
+.volume-bar:hover .volume-handle,
+.volume-bar.dragging .volume-handle {
+    display: block;
+}
+
+.action-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--tertiary-bg);
+}
+
+.volume-bar {
+    width: 80px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: height 0.3s ease;
+}
+
+.volume-bar:hover {
+    height: 6px;
+}
+
+.volume-level {
+    height: 100%;
+    background-color: var(--text-secondary);
+    border-radius: 2px;
+    transition: width 0.1s ease;
+}
+
+.volume-bar:hover .volume-level {
+    background-color: var(--accent-green);
+}
+
+/* Expanded player modal */
+.mf-expanded-player-overlay {
+    position: fixed;
+    inset: 0;
+    /* subtle bottom-focused dim: only darken lower area so the rest of the app remains visible */
+    background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 30%, rgba(0,0,0,0) 60%);
+    z-index: 11000;
+    display: flex;
+    /* anchor player to bottom so it slides up from off-screen */
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 36px;
+}
+.expanded-player {
+    width: min(1100px, calc(100% - 80px));
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+    /* ensure transform will be used for the enter/leave animation */
+    transform: translateY(100%);
+    opacity: 0;
+}
+.expanded-player .big-cover {
+    width: 420px;
+    height: 420px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    flex-shrink: 0;
+}
+.expanded-player .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.expanded-player .controls-row {
+    display:flex; align-items:center; gap:12px; margin-top:12px;
+}
+.expanded-player .close-btn {
+    margin-left: auto; background:none; border:none; color:var(--text-primary); font-size:1.2rem; cursor:pointer;
+}
+
+/* Animations for expanded player */
+.mf-expanded-player-overlay { opacity: 0; transition: opacity 260ms ease-out; }
+.mf-expanded-player-overlay.open { opacity: 1; }
+.expanded-player { transform: translateY(24px); opacity: 0; transition: transform 300ms cubic-bezier(.22,1,.36,1), opacity 250ms ease-out; }
+.mf-expanded-player-overlay.open .expanded-player { transform: translateY(0); opacity: 1; transition: transform 320ms cubic-bezier(.22,1,.36,1), opacity 260ms ease-out; }
+.expanded-player.closing { transform: translateY(100%); opacity: 0; transition: transform 260ms cubic-bezier(.22,1,.36,1), opacity 220ms ease-in; }

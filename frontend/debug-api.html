@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Debug</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #1a1a1a; color: #fff; }
+        pre { background: #2a2a2a; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 10px 0; background: #0066cc; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0052a3; }
+        .success { color: #0f0; }
+        .error { color: #f00; }
+    </style>
+</head>
+<body>
+    <h1>API Debug Console</h1>
+    <button onclick="testGetTracks()">Test API.getTracks()</button>
+    <button onclick="testDirectFetch()">Test Direct Fetch</button>
+    <button onclick="clearLog()">Clear Log</button>
+    
+    <div id="log"></div>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/api.js"></script>
+    
+    <script>
+        const log = document.getElementById('log');
+        
+        function addLog(message, isError = false) {
+            const pre = document.createElement('pre');
+            pre.className = isError ? 'error' : 'success';
+            pre.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(pre);
+            console.log(message);
+        }
+        
+        async function testGetTracks() {
+            addLog('=== Testing API.getTracks() ===');
+            try {
+                addLog(`BASE_URL: ${API.BASE_URL}`);
+                const tracks = await API.getTracks();
+                addLog(`Got ${tracks ? tracks.length : 'null'} tracks`);
+                if (tracks && tracks.length > 0) {
+                    addLog(`First track: ${JSON.stringify(tracks[0], null, 2)}`);
+                }
+            } catch (e) {
+                addLog(`Error: ${e.message}`, true);
+            }
+        }
+        
+        async function testDirectFetch() {
+            addLog('=== Testing Direct Fetch ===');
+            try {
+                const url = 'http://localhost:3000/api/tracks?_=' + Date.now();
+                addLog(`Fetching: ${url}`);
+                const response = await fetch(url, { cache: 'no-store' });
+                addLog(`Response status: ${response.status}`);
+                
+                const text = await response.text();
+                addLog(`Response length: ${text.length} bytes`);
+                
+                const json = JSON.parse(text);
+                addLog(`JSON parsed successfully`);
+                addLog(`Response keys: ${Object.keys(json).join(', ')}`);
+                addLog(`Full response: ${JSON.stringify(json, null, 2)}`);
+                
+                if (json.tracks) {
+                    addLog(`tracks field exists, length: ${json.tracks.length}`);
+                }
+            } catch (e) {
+                addLog(`Error: ${e.message}`, true);
+            }
+        }
+        
+        function clearLog() {
+            log.innerHTML = '';
+        }
+        
+        // Auto test on load
+        window.addEventListener('load', () => {
+            addLog('Page loaded, API.BASE_URL = ' + API.BASE_URL);
+        });
+    </script>
+</body>
+</html>

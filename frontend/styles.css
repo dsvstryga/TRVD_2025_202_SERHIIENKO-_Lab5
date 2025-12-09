@@ -1,0 +1,50 @@
+/* main.css - Головний файл стилів MusicFlow */
+@import url('./css/base.css');
+@import url('./css/layout.css');
+@import url('./css/navigation.css');
+@import url('./css/header.css');
+@import url('./css/music-player.css');
+@import url('./css/tracks.css');
+@import url('./css/library.css');
+@import url('./css/artists.css');
+@import url('./css/about.css');
+@import url('./css/auth.css');
+@import url('./css/profile.css');
+@import url('./css/admin.css');
+@import url('./css/responsive.css');
+@import url('./css/admin.css');
+
+/* Interactive & hover effects (added) */
+@import url('./css/interactive.css');
+
+
+/* Глобальні утиліти */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

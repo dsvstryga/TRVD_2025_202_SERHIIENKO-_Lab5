@@ -1,0 +1,287 @@
+/* header.css - Стилі верхньої частини */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+/* Пошук */
+.search-bar {
+    position: relative;
+    flex: 1;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Genre filter dropdown inside search input (absolute positioned) */
+.search-genre-filter {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.45rem 1.6rem 0.45rem 0.7rem;
+    border-radius: 6px;
+    background: var(--tertiary-bg);
+    color: var(--text-primary);
+    border: 1px solid rgba(29, 185, 84, 0.5);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 200ms ease;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231db954' stroke-width='2.5'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 1.1em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    text-transform: capitalize;
+}
+
+.search-genre-filter:hover {
+    border-color: var(--accent-green);
+    background-color: rgba(29, 185, 84, 0.08);
+    box-shadow: 0 2px 12px rgba(29,185,84,0.2);
+}
+
+.search-genre-filter:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.3);
+    background-color: rgba(29, 185, 84, 0.08);
+}
+
+/* Style the dropdown options */
+.search-genre-filter option {
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+    padding: 8px;
+    border: none;
+    font-weight: 500;
+}
+
+.search-genre-filter option:hover {
+    background: rgba(29, 185, 84, 0.3);
+    color: var(--accent-green);
+}
+
+.search-genre-filter option:checked {
+    background: rgba(29, 185, 84, 0.4);
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+/* Animated search results panel - dropdown style like YouTube */
+#searchResultsSection {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    background: linear-gradient(135deg, var(--secondary-bg), var(--tertiary-bg));
+    border: 1px solid rgba(29, 185, 84, 0.2);
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 280ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease, padding 280ms ease;
+    z-index: 100;
+}
+
+#searchResultsSection.visible {
+    opacity: 1;
+    pointer-events: all;
+    max-height: 600px;
+    padding: 16px 0;
+}
+
+#searchResultsSection > .section {
+    position: static;
+    transform: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 16px;
+    max-height: none;
+    opacity: 1;
+}
+
+#searchResultsSection .section-header {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+#searchResultsSection .section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#searchResultsSection .tracks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#searchResultsSection .search-results-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.search-results-list .track-item {
+    display: grid;
+    grid-template-columns: 40px 48px 1fr 120px 60px 60px;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: all 160ms cubic-bezier(.2,.9,.2,1);
+    cursor: pointer;
+}
+
+.search-results-list .track-item:hover {
+    background: rgba(29,185,84,0.08);
+    border: none;
+    transform: translateY(-3px);
+}
+
+#searchResultsSection.visible .search-results-list .track-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#searchResultsSection .loading-text {
+    text-align: center;
+    padding: 16px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    z-index: 1;
+    cursor: pointer;
+    transition: color 200ms ease;
+}
+
+.search-icon:hover {
+    color: var(--accent-green);
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border: 1px solid rgba(29,185,84,0.2);
+    border-radius: 25px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: all 220ms ease;
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search-input:focus {
+    outline: none;
+    background: linear-gradient(135deg, rgba(29,185,84,0.08), rgba(29,185,84,0.03));
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 2px rgba(29,185,84,0.2);
+}
+
+/* Дії користувача */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.premium-btn {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.premium-btn:hover {
+    background-color: var(--text-primary);
+    color: var(--primary-bg);
+}
+
+.premium-icon {
+    color: #ffd700;
+}
+
+/* Аватар користувача */
+.user-avatar-link {
+    display: block;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+}
+
+.user-avatar i {
+    font-size: 0.8rem;
+}
+
+/* Бейдж статусу */
+.user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-green);
+    color: #000000;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.user-badge i {
+    font-size: 0.8rem;
+}

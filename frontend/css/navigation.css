@@ -1,0 +1,147 @@
+/* navigation.css - Стилі навігації */
+.logo {
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+}
+
+.logo-link {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.logo-link:hover {
+    color: var(--accent-green);
+}
+
+.logo-icon {
+    color: var(--accent-green);
+    font-size: 1.5rem;
+}
+
+/* Навігація */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0.8rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.18s ease;
+    font-weight: 600;
+    background: transparent;
+    margin-bottom: 6px;
+}
+
+.nav-item:hover {
+    color: #fff;
+    background-color: rgba(255,255,255,0.04);
+}
+
+.nav-item.active {
+    color: #fff;
+    background-color: rgba(255,255,255,0.06);
+    box-shadow: inset 3px 0 0 var(--accent-green);
+}
+
+.nav-icon {
+    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+}
+
+.nav-text {
+    flex: 1;
+}
+
+/* Розділ плейлистів */
+.playlists-section {
+    border-top: 1px solid rgba(255,255,255,0.03);
+    padding-top: 0.8rem;
+}
+
+.playlists-header {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.playlist-item {
+    padding: 0.35rem 0;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.12s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.playlist-item:hover {
+    color: var(--text-primary);
+}
+
+.playlist-item.active {
+    color: var(--accent-green);
+}
+
+/* Кнопка входу в sidebar */
+.account-nav-footer {
+    border-top: 1px solid var(--tertiary-bg);
+    padding-top: 1rem;
+    margin-top: auto;
+}
+
+.account-nav-btn {
+    background-color: var(--accent-green) !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    border-radius: 999px;
+    padding: 8px 12px;
+}
+
+.account-nav-btn:hover {
+    background-color: #1db954dd !important;
+}
+
+.playlist-icon {
+    font-size: 0.8rem;
+    width: 16px;
+    text-align: center;
+}
+
+/* Навігація в футері акаунта */
+.account-nav-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--tertiary-bg);
+}
+
+/* Адмін посилання */
+.admin-link {
+    border-left: 3px solid var(--accent-red);
+}
+
+.admin-link .nav-icon {
+    color: var(--accent-red);
+}

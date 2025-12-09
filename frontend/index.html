@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicFlow - Ваша музика</title>
+    <meta name="description" content="Слухайте улюблену музику та відкривайте нові треки">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-music logo-icon"></i> 
+                    MusicFlow
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item active">
+                    <span class="nav-icon"><i class="fas fa-home"></i></span>
+                    <span class="nav-text">Головна</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-search"></i></span>
+                    <span class="nav-text">Пошук</span>
+                </a>
+                <a href="library.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-book"></i></span>
+                    <span class="nav-text">Бібліотека</span>
+                </a>
+                <a href="about.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
+                    <span class="nav-text">Про нас</span>
+                </a>
+                <!-- Адмін панель видалено з бокової панелі -->
+                </a>
+            </nav>
+            
+            <div class="playlists-section">
+                <a href="account.html" class="nav-item active account-nav-btn" id="sidebarAccountBtn">
+                    <span class="nav-icon" id="sidebarAccountIcon">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </span>
+                    <span class="nav-text" id="sidebarAccountText">Увійти</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="search-bar" style="position:relative;">
+                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                    <input type="text" class="search-input" placeholder="Пошук музики, виконавців, плейлистів..." style="padding-right:140px;">
+                    <!-- Genre selector for search (added inline to guarantee availability before JS initializes) -->
+                    <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:10;">
+                        <select class="search-genre-filter">
+                            <option value="">Усі жанри</option>
+                            <option value="Поп">Поп</option>
+                            <option value="Рок">Рок</option>
+                            <option value="Хіп-хоп">Хіп-хоп</option>
+                            <option value="Електронна">Електронна</option>
+                            <option value="Джаз">Джаз</option>
+                            <option value="Класична">Класична</option>
+                            <option value="Фолк">Фолк</option>
+                            <option value="Метал">Метал</option>
+                            <option value="R&B">R&B</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <button class="premium-btn">
+                        <i class="fas fa-crown premium-icon"></i> Отримати Premium
+                    </button>
+                    <a href="account.html" class="user-avatar-link">
+                        <div class="user-avatar" id="headerAvatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </a>
+                </div>  
+            </header>
+
+            <!-- Динамічні рекомендації: пісні, які користувач ще не прослухав -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Рекомендації</h2>
+                </div>
+                <div class="artists-grid" id="recommendations">
+                    <div class="loading-text">Завантаження рекомендацій...</div>
+                </div>
+            </section>
+
+            <!-- Dynamic 'Випадкові' (random) -->
+            <section class="section">
+                <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                    <h2 class="section-title" style="margin:0;">Випадкові</h2>
+                    <div class="section-controls" style="display:flex;gap:8px;align-items:center;">
+                        <button id="refreshRandom" class="btn small" style="background:#1db954;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:600;">Оновити ↻</button>
+                    </div>
+                </div>
+                <div class="artists-grid" id="random-suggestions">
+                    <div class="loading-text">Завантаження рекомендацій...</div>
+                </div>
+            </section>
+
+            <!-- Recently Played Section (hidden on UI but kept for randomization logic) -->
+            <section class="section hidden" id="recentSection">
+                <div class="section-header">
+                    <h2 class="section-title">Послухати ще раз</h2>
+                </div>
+                <div class="tracks-list simple" data-source="recent">
+                    <!-- Tracks will be loaded dynamically when needed -->
+                </div>
+            </section>
+
+            <hr class="section-divider">
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Музика для вас</h2>
+                </div>
+                <div class="tracks-list simple">
+                    <!-- Tracks will be loaded dynamically here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Music Player -->
+        <footer class="music-player">
+            <div class="now-playing">
+                <div class="current-track">
+                    <div class="track-cover-small"></div>
+                    <div class="track-details">
+                        <h4>Welcome to MusicFlow</h4>
+                        <p>MusicFlow Team</p>
+                    </div>
+                    <button class="like-btn"><i class="far fa-heart"></i></button>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button class="control-btn"><i class="fas fa-random"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="control-btn play-btn"><i class="fas fa-play"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+                    <button class="control-btn"><i class="fas fa-redo"></i></button>
+                </div>
+                
+                <div class="progress-section">
+                    <span class="current-time">0:00</span>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <span class="total-time">2:30</span>
+                </div>
+            </div>
+            
+            <div class="player-actions">
+                <button class="action-btn"><i class="fas fa-list"></i></button>
+                <button class="action-btn"><i class="fas fa-volume-up"></i></button>
+                <div class="volume-bar">
+                    <div class="volume-level"></div>
+                </div>
+                <button class="action-btn"><i class="fas fa-expand"></i></button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Hidden audio element for playback -->
+    <audio id="audioPlayer" style="display:none;"></audio>
+
+    <!-- JavaScript Files -->
+    <script src="./js/config.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/user-manager.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/scripts.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

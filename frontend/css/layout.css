@@ -1,0 +1,182 @@
+/* layout.css - Основний макет додатка */
+.app-container {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: 1fr var(--player-height);
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #000000;
+    padding: 1rem;
+    position: fixed;
+    width: var(--sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid var(--tertiary-bg);
+    z-index: 100;
+}
+
+/* Main Content */
+.main-content {
+    grid-column: 2;
+    padding: 2rem;
+    margin-left: var(--sidebar-width);
+    min-height: calc(100vh - var(--player-height));
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Center primary page content inside the available main area.
+   This keeps the sidebar fixed while centering the page body (helps account/profile look centered)
+*/
+.main-content > * {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Music Player */
+.music-player {
+    grid-column: 1 / -1;
+    background-color: var(--secondary-bg);
+    border-top: 1px solid var(--tertiary-bg);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: var(--player-height);
+    z-index: 1000;
+}
+
+/* Секції */
+.section {
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.section-divider {
+    height: 1px;
+    background-color: var(--tertiary-bg);
+    margin: 2rem 0;
+    border: none;
+}
+
+/* Картки */
+.card {
+    background-color: var(--secondary-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    background-color: var(--tertiary-bg);
+}
+
+.card-header {
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.card-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Сітки */
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+/* Statistics Section */
+.stats-section {
+    margin-bottom: 3rem;
+}
+
+.stats-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: var(--secondary-bg);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background-color: var(--tertiary-bg);
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}

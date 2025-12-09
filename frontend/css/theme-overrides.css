@@ -1,0 +1,79 @@
+/* Theme overrides: variables, fonts and utility styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+:root{
+    --bg: #0b0d11;
+    --primary-bg: #0f1114;
+    --secondary-bg: #111216;
+    --tertiary-bg: #14161a;
+    --text-primary: #e6eef8;
+    --text-secondary: #a8b3c7;
+    --accent-green: #1db954;
+    --accent-blue: #5b8def;
+    --accent-purple: #7a5cff;
+    --border-color: rgba(255,255,255,0.04);
+    --muted: rgba(255,255,255,0.06);
+}
+
+html,body{height:100%;}
+body{
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: linear-gradient(180deg, #07070a 0%, #0d0f14 60%);
+    color: var(--text-primary);
+    margin:0; padding:0; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+
+/* App container layout helpers */
+.app-container{display:flex; min-height:100vh;}
+.sidebar{width:220px; background:linear-gradient(180deg,var(--primary-bg),var(--secondary-bg)); padding:20px 14px;}
+.main-content{flex:1; padding:28px;}
+.top-header h2{margin:0 0 12px 0; font-size:1.35rem;}
+
+/* Cards and forms */
+.upload-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:16px; border-radius:12px; box-shadow: 0 6px 24px rgba(0,0,0,0.45);}
+.upload-row{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:8px;}
+.upload-actions{align-items:center;}
+.form-input{background:transparent; border:1px solid var(--border-color); color:var(--text-primary); padding:10px 12px; border-radius:8px; min-width:160px;}
+.file-label{display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:8px; border:1px dashed var(--muted); color:var(--text-secondary); cursor:pointer;}
+.file-label input{display:none;}
+.file-input{display:none;}
+
+/* Buttons */
+.profile-btn{padding:8px 12px; border-radius:8px; border:none; cursor:pointer; color:var(--text-primary); background:transparent; transition:all 180ms ease;}
+.profile-btn.primary{background:linear-gradient(90deg,var(--accent-blue),var(--accent-purple)); box-shadow:0 6px 20px rgba(90,100,255,0.12); color:white;}
+.profile-btn.danger{background:transparent; border:1px solid rgba(255,80,80,0.12); color:#ff8b8b;}
+.profile-btn:hover{transform:translateY(-2px)}
+
+/* Track cards */
+.tracks-list{display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:14px;}
+.track-row{display:flex; gap:12px; align-items:center; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:12px; border-radius:10px; border:1px solid var(--border-color);}
+.track-cover{width:76px; height:76px; border-radius:8px; background:#222; background-size:cover; background-position:center; flex-shrink:0; box-shadow: 0 6px 18px rgba(0,0,0,0.5);} 
+.track-meta{flex:1; min-width:0;}
+.track-meta .title{font-weight:600; font-size:1rem;}
+.track-meta .sub{color:var(--text-secondary); font-size:0.9rem; margin-top:6px}
+.track-actions{display:flex; gap:8px}
+
+/* small icon buttons used in track list */
+.btn-icon{
+    background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:8px;border-radius:8px;margin-left:8px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px}
+.btn-icon:hover{color:var(--text-primary);background:rgba(255,255,255,0.02);transform:translateY(-2px)}
+.track-controls{display:flex;align-items:center;gap:8px;justify-content:flex-end;min-width:180px}
+.track-item{display:flex;align-items:center;padding:12px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);}
+.track-number{width:28px;text-align:center;color:var(--text-secondary);margin-right:8px}
+.track-info{flex:1;min-width:0}
+.tracks-list.simple .track-cover-small{width:56px;height:56px;border-radius:6px;}
+.track-like.favorited i, .track-fav.favorited i{color:var(--accent-green)}
+
+/* Cover preview */
+.cover-preview{width:86px; height:86px; border-radius:8px; background-size:cover; background-position:center; box-shadow: 0 8px 30px rgba(0,0,0,0.6); border:1px solid var(--border-color);}
+.hidden{display:none}
+
+/* Modal tweaks (matching showModal) */
+.mf-modal-dialog{background:linear-gradient(180deg,#0f0f12,#0b0b0d);}
+.mf-modal-submit{background:var(--accent-green); color:#fff}
+
+/* Small responsive tweaks */
+@media (max-width:900px){
+    .sidebar{display:none}
+    .main-content{padding:16px}
+    .tracks-list{grid-template-columns:1fr}
+}

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бібліотека - MusicFlow</title>
+    <meta name="description" content="Ваша музична бібліотека">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-music logo-icon"></i> 
+                    MusicFlow
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-home"></i></span>
+                    <span class="nav-text">Головна</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-search"></i></span>
+                    <span class="nav-text">Пошук</span>
+                </a>
+                <a href="library.html" class="nav-item active">
+                    <span class="nav-icon"><i class="fas fa-book"></i></span>
+                    <span class="nav-text">Бібліотека</span>
+                </a>
+                <a href="about.html" class="nav-item">
+                    <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
+                    <span class="nav-text">Про нас</span>
+                </a>
+                <!-- Адмін панель видалено з бокової панелі -->
+                </a>
+            </nav>
+            
+            <div class="playlists-section">
+                <a href="account.html" class="nav-item active account-nav-btn" id="sidebarAccountBtn">
+                    <span class="nav-icon" id="sidebarAccountIcon">
+                        <i class="fas fa-user-circle"></i>
+                    </span>
+                    <span class="nav-text" id="sidebarAccountText">Увійти</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="search-bar" style="position:relative;">
+                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                    <input type="text" class="search-input" placeholder="Пошук у бібліотеці..." style="padding-right:140px;">
+                    <!-- Genre selector for search (added inline to guarantee availability before JS initializes) -->
+                    <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:10;">
+                        <select class="search-genre-filter">
+                            <option value="">Усі жанри</option>
+                            <option value="Поп">Поп</option>
+                            <option value="Рок">Рок</option>
+                            <option value="Хіп-хоп">Хіп-хоп</option>
+                            <option value="Електронна">Електронна</option>
+                            <option value="Джаз">Джаз</option>
+                            <option value="Класична">Класична</option>
+                            <option value="Фолк">Фолк</option>
+                            <option value="Метал">Метал</option>
+                            <option value="R&B">R&B</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <button class="premium-btn">
+                        <i class="fas fa-crown premium-icon"></i> Отримати Premium
+                    </button>
+                    <a href="account.html" class="user-avatar-link">
+                        <div class="user-avatar" id="headerAvatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </a>
+                </div> 
+            </header>
+
+            <!-- Library Header -->
+            <section class="library-header">
+                <div class="library-info">
+                    <div class="library-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="library-details">
+                        <span class="library-badge">БІБЛІОТЕКА</span>
+                        <h1>Ваша музика</h1>
+                        <p>Всі ваші плейлисти, улюблені треки та альбоми</p>
+                        <div class="library-stats">
+                            <span><span id="libTracksCount">0</span> треків • <span id="libFavsCount">0</span> улюблених • <span id="libPlaylistsCount">0</span> плейлистів</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Library Actions -->
+            <section class="library-actions">
+                <button id="playAllBtn" class="play-all-btn">
+                    <i class="fas fa-play"></i>
+                    <span>Грати все</span>
+                </button>
+                <button id="sortBtn" class="library-action-btn">
+                    <i class="fas fa-sort"></i>
+                    <span>Сортувати (назва)</span>
+                </button>
+                <button id="filterBtn" class="library-action-btn">
+                    <i class="fas fa-filter"></i>
+                    <span>Фільтр (жанр)</span>
+                </button>
+                <button id="createPlaylistBtn" class="library-action-btn" style="margin-left:12px;background:#1db954;color:#fff;border-radius:6px;padding:6px 10px;border:none;">
+                    <i class="fas fa-plus"></i>
+                    <span>Створити плейлист</span>
+                </button>
+            </section>
+
+            <!-- Recently Played -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Нещодавно відтворені</h2>
+                </div>
+                <div class="tracks-list" data-source="recent">
+                    <!-- Tracks will be loaded dynamically -->
+                    <div class="loading-text">Завантаження треків...</div>
+                </div>
+            </section>
+
+            <!-- Your Playlists -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Ваші плейлисти</h2>
+                </div>
+                <div class="playlists-grid" id="playlistsGrid">
+                    <div class="loading-text">Завантаження плейлистів...</div>
+                </div>
+            </section>
+
+            <!-- Liked Songs -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Улюблені треки</h2>
+                </div>
+                <div class="tracks-list" id="favoritesTracks" data-source="favorites">
+                    <!-- Favorites will be loaded dynamically -->
+                    <div class="loading-text">Завантаження улюблених треків...</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Music Player -->
+        <footer class="music-player">
+            <div class="now-playing">
+                <div class="current-track">
+                    <div class="track-cover-small" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                    <div class="track-details">
+                        <h4>Welcome to MusicFlow</h4>
+                        <p>MusicFlow Team</p>
+                    </div>
+                    <button class="like-btn"><i class="far fa-heart"></i></button>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button class="control-btn"><i class="fas fa-random"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="control-btn play-btn"><i class="fas fa-play"></i></button>
+                    <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+                    <button class="control-btn"><i class="fas fa-redo"></i></button>
+                </div>
+                
+                <div class="progress-section">
+                    <span class="current-time">0:00</span>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%;"></div>
+                    </div>
+                    <span class="total-time">2:30</span>
+                </div>
+            </div>
+            
+            <div class="player-actions">
+                <button class="action-btn"><i class="fas fa-list"></i></button>
+                <button class="action-btn"><i class="fas fa-volume-up"></i></button>
+                <div class="volume-bar">
+                    <div class="volume-level" style="width: 70%;"></div>
+                </div>
+                <button class="action-btn"><i class="fas fa-expand"></i></button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/user-manager.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/scripts.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+        // Helper to format duration (seconds)
+        function formatDuration(seconds) {
+            if (!seconds || isNaN(seconds)) return '0:00';
+            const sec = Math.floor(Number(seconds));
+            const m = Math.floor(sec / 60);
+            const s = String(sec % 60).padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        // Helper to normalize audio URLs to absolute paths
+        function normalizeAudioUrl(url) {
+            if (!url) return '';
+            let result = String(url);
+            
+            // Convert to absolute URL with backend base (not window.location)
+            if (result.startsWith('/')) {
+                const apiBase = APP_CONFIG.API_BASE_URL;
+                const backendBase = apiBase.replace(/\/api\/?$/, ''); // Remove /api from the end
+                result = backendBase + result;
+            } else if (!/^https?:\/\//i.test(result)) {
+                const apiBase = APP_CONFIG.API_BASE_URL;
+                const backendBase = apiBase.replace(/\/api\/?$/, '');
+                result = backendBase + '/' + result.replace(/^\/+/, '');
+            }
+            // encode URI to avoid invalid-URI errors when filenames contain spaces or special characters
+            try {
+                return encodeURI(result);
+            } catch (e) {
+                console.warn('normalizeAudioUrl: encodeURI failed for', result, e);
+                return result;
+            }
+        }
+
+        // Load recently played tracks when library page loads
+        async function loadRecentlyPlayedInLibrary() {
+            const recentSection = document.querySelector('.tracks-list[data-source="recent"]');
+            if (!recentSection) return;
+
+            try {
+                // Check if user is authenticated
+                if (typeof window.API === 'undefined' || !window.API.isAuthenticated()) {
+                    recentSection.innerHTML = '<div class="loading-text">Увійдіть, щоб переглянути нещодавно відтворені треки</div>';
+                    return;
+                }
+
+                // Fetch recently played and favorites from API
+                const recentTracks = await window.API.getRecent();
+                const favorites = await window.API.getFavorites();
+                const favIds = favorites.map(f => String(f._id || f.id || ''));
+                console.log('Recent tracks from API:', recentTracks);
+                console.log('Favorite IDs:', favIds);
+
+                if (!recentTracks || recentTracks.length === 0) {
+                    recentSection.innerHTML = '<div class="loading-text">Ще немає нещодавно відтворених треків</div>';
+                    return;
+                }
+
+                // Create track items from recent list
+                let html = '';
+                recentTracks.forEach((track, index) => {
+                    const cover = track.coverUrl || '/covers/default.png';
+                    const audioUrl = track.audioUrl || '';
+                    const trackId = track._id || track.id || '';
+                    const genre = (track.genre || '').replace(/"/g, '');
+                    const isFavorite = favIds.includes(String(trackId));
+                    
+                    html += `
+                        <div class="track-item" data-audio="${audioUrl}" data-id="${trackId}" data-cover="${cover}" data-genre="${genre}">
+                            <div class="track-number">${index + 1}</div>
+                            <div class="track-cover-small" style="background-image:url('${cover}');background-size:cover;background-position:center;position:relative;">
+                                <div class="play-overlay"><i class="fas fa-play"></i></div>
+                            </div>
+                            <div class="track-info" style="flex:1;min-width:0;">
+                                <h3 class="track-title" style="margin:0;font-size:1rem;">${(track.title || '').replace(/</g, '&lt;')}</h3>
+                                <p class="track-artist" style="margin:2px 0 0 0;color:var(--text-secondary);font-size:0.9rem;">${(track.artist || '').replace(/</g, '&lt;')}</p>
+                            </div>
+                            <div class="track-views"><span class="views-count" data-track="${trackId}">${(track.popularity || 0)} прослух.</span></div>
+                            <div class="track-duration" data-duration="${track.duration || 0}">${formatDuration(track.duration)}</div>
+                            <button class="fav-btn" data-id="${trackId}" title="Улюблене"><i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i></button>
+                        </div>
+                    `;
+                });
+
+                recentSection.innerHTML = html;
+
+                // Load durations for tracks that have 0 duration using audio metadata
+                const trackItems = Array.from(recentSection.querySelectorAll('.track-item'));
+                console.log('loadRecentlyPlayedInLibrary: loading durations for', trackItems.length, 'tracks...');
+
+                // Create a throttled queue to avoid too many parallel audio loads
+                let qIndex = 0;
+                const loadNext = async () => {
+                    if (qIndex >= trackItems.length) {
+                        console.log('loadRecentlyPlayedInLibrary: duration load complete');
+                        return;
+                    }
+                    
+                    const trackEl = trackItems[qIndex++];
+                    const durationEl = trackEl.querySelector('.track-duration');
+                    const audioUrl = trackEl.getAttribute('data-audio');
+                    const storedDuration = durationEl.getAttribute('data-duration');
+                    const numDuration = Number(storedDuration) || 0;
+
+                    // If duration is already set and non-zero, skip
+                    if (numDuration > 0) {
+                        return setTimeout(loadNext, 20);
+                    }
+
+                    // Try to load duration from audio metadata
+                    if (!audioUrl) {
+                        durationEl.textContent = formatDuration(0);
+                        return setTimeout(loadNext, 20);
+                    }
+
+                    durationEl.textContent = '…';
+                    const audio = new Audio();
+                    audio.preload = 'metadata';
+
+                    const onMetadata = () => {
+                        try {
+                            const dur = Math.floor(audio.duration || 0);
+                            durationEl.textContent = formatDuration(dur);
+                            durationEl.setAttribute('data-duration', dur);
+                        } catch (e) {
+                            durationEl.textContent = formatDuration(0);
+                        }
+                        cleanup();
+                        setTimeout(loadNext, 50);
+                    };
+
+                    const onError = () => {
+                        durationEl.textContent = formatDuration(0);
+                        cleanup();
+                        setTimeout(loadNext, 50);
+                    };
+
+                    const cleanup = () => {
+                        audio.removeEventListener('loadedmetadata', onMetadata);
+                        audio.removeEventListener('error', onError);
+                        try { audio.src = ''; } catch (e) {}
+                    };
+
+                    audio.addEventListener('loadedmetadata', onMetadata, { once: true });
+                    audio.addEventListener('error', onError, { once: true });
+
+                    try {
+                        const normalized = normalizeAudioUrl(audioUrl);
+                        if (!normalized || typeof normalized !== 'string' || !/^https?:\/\//i.test(normalized)) { durationEl.textContent = formatDuration(0); return setTimeout(loadNext, 20); }
+                        try {
+                            const head = await fetch(normalized, { method: 'HEAD' });
+                            if (!head.ok) { console.warn('loadRecentlyPlayedInLibrary: audio HEAD failed', normalized, head.status); durationEl.textContent = formatDuration(0); return setTimeout(loadNext, 20); }
+                            audio.src = normalized;
+                        } catch (fetchErr) {
+                            console.warn('loadRecentlyPlayedInLibrary: audio HEAD request failed', normalized, fetchErr);
+                            durationEl.textContent = formatDuration(0);
+                            return setTimeout(loadNext, 20);
+                        }
+                    } catch (e) {
+                        console.warn('loadRecentlyPlayedInLibrary: Failed to set audio src for', audioUrl, e);
+                        durationEl.textContent = formatDuration(0);
+                        setTimeout(loadNext, 20);
+                    }
+                };
+
+                loadNext();
+
+                // Attach event handlers to play overlays and favorite buttons
+                recentSection.querySelectorAll('.track-item').forEach((trackEl) => {
+                    const trackId = trackEl.getAttribute('data-id');
+                    
+                    // Play button (play-overlay or track-cover-small)
+                    const playOverlay = trackEl.querySelector('.play-overlay');
+                    const trackCover = trackEl.querySelector('.track-cover-small');
+                    
+                    const playHandler = (e) => {
+                        e.stopPropagation();
+                        if (window.musicPlayer && typeof window.musicPlayer.playOrToggleFromItem === 'function') {
+                            // detect if clicking a different track or the same to decide whether to increment
+                            const wasCurrent = (window.musicPlayer.currentTrack && (String(window.musicPlayer.currentTrack._id || window.musicPlayer.currentTrack.id || window.musicPlayer.currentTrack.trackId) === String(trackId)));
+                            window.musicPlayer.playOrToggleFromItem(trackEl);
+                            if (!wasCurrent) {
+                                if (trackId && window.API && typeof window.API.incrementPlay === 'function') {
+                                    window.API.incrementPlay(trackId).then(res => { try { const pop = res && res.track && (typeof res.track.popularity === 'number' ? res.track.popularity : null); if (pop !== null) window.updatePopularityDisplay(trackId, pop); else window.updatePopularityDisplay(trackId); } catch(e){} }).catch(err => console.warn('Failed to increment play count:', err));
+                                }
+                                if (trackId && window.API && typeof window.API.markPlayed === 'function') {
+                                    window.API.markPlayed(trackId).catch(err => console.warn('Failed to mark as played:', err));
+                                }
+                            }
+                        }
+                    };
+                    
+                    if (playOverlay) {
+                        playOverlay.addEventListener('click', playHandler);
+                    }
+                    if (trackCover) {
+                        trackCover.addEventListener('click', playHandler);
+                    }
+                    
+                    // Favorite button
+                    const favBtn = trackEl.querySelector('.fav-btn');
+                    if (favBtn) {
+                        favBtn.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            if (!trackId || !window.API) return;
+
+                            if (!window._mfFavProcessing) window._mfFavProcessing = new Set();
+                            if (window._mfFavProcessing.has(String(trackId))) return;
+                            window._mfFavProcessing.add(String(trackId));
+
+                            // Require authentication
+                            if (typeof window.API.isAuthenticated === 'function' && !window.API.isAuthenticated()) {
+                                if (window.showNotification) window.showNotification('Увійдіть, щоб додати улюблене', 'warning');
+                                try { window._mfFavProcessing.delete(String(trackId)); } catch (e) {}
+                                return;
+                            }
+
+                            const icon = favBtn.querySelector('i');
+                            try {
+                                const res = await window.API.toggleFavorite(trackId);
+                                if (res && typeof res.favorited !== 'undefined') {
+                                    if (res.favorited) {
+                                        icon.classList.replace('far', 'fas');
+                                        if (window.showNotification) window.showNotification('Додано до улюблених', 'success');
+                                    } else {
+                                        icon.classList.replace('fas', 'far');
+                                        if (window.showNotification) window.showNotification('Видалено з улюблених', 'info');
+                                    }
+                                    // Update global favorites cache and refresh favorites UI
+                                    try {
+                                        if (!window._mf_favSet) window._mf_favSet = new Set();
+                                        if (res.favorited) window._mf_favSet.add(String(trackId)); else window._mf_favSet.delete(String(trackId));
+                                        try { if (typeof refreshFavorites === 'function') refreshFavorites(); } catch (e) { /* ignore */ }
+                                    } catch (e) { console.debug('fav-btn handler: update favSet/refresh failed', e); }
+                                } else {
+                                    // Unexpected response shape - toggle locally
+                                    const nowFav = icon.classList.contains('far');
+                                    if (nowFav) icon.classList.replace('far', 'fas'); else icon.classList.replace('fas', 'far');
+                                    if (window.showNotification) window.showNotification('Оновлено улюблене', 'info');
+                                }
+                            } catch (err) {
+                                console.error('Toggle favorite error:', err);
+                                if (window.showNotification) window.showNotification('Помилка при збереженні', 'error');
+                            } finally {
+                                try { window._mfFavProcessing.delete(String(trackId)); } catch (e) {}
+                            }
+                        });
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error loading recent tracks:', error);
+                recentSection.innerHTML = `<div class="loading-text">Помилка завантаження: ${error.message}</div>`;
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadRecentlyPlayedInLibrary);
+    </script>
+
+</body>
+</html>
